@@ -7,6 +7,7 @@ class LocationRepository implements Repository<Location, string> {
     return await ServiceClient.callService("hive-properties-service", {
       url: `properties/locations`,
       method: "POST",
+      data: entity,
     });
   }
   async findOneById(id: string): Promise<Location | undefined> {
@@ -17,7 +18,7 @@ class LocationRepository implements Repository<Location, string> {
   }
   async findAll(): Promise<Location[]> {
     return await ServiceClient.callService("hive-properties-service", {
-      url: `properties`,
+      url: `properties/locations`,
       method: "GET",
     });
   }
@@ -34,6 +35,7 @@ class LocationRepository implements Repository<Location, string> {
     return await ServiceClient.callService("hive-properties-service", {
       url: `properties/locations/${id}`,
       method: "PUT",
+      data: updates,
     });
   }
   async deleteById(id: string): Promise<void> {

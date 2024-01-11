@@ -7,6 +7,7 @@ export class PropertyRepository implements Repository<Property, string> {
     return await ServiceClient.callService("hive-properties-service", {
       url: `properties`,
       method: "POST",
+      data: entity,
     });
   }
   async findOneById(id: string): Promise<Property | undefined> {
@@ -34,6 +35,7 @@ export class PropertyRepository implements Repository<Property, string> {
     return await ServiceClient.callService("hive-properties-service", {
       url: `properties/${id}`,
       method: "PUT",
+      data: updates, 
     });
   }
   async deleteById(id: string): Promise<void> {
