@@ -9,6 +9,7 @@ import {
   getLocations,
   updateLocation,
 } from "../controllers";
+import { uploader } from "../../../middlewares";
 
 const router = Router();
 
@@ -18,7 +19,7 @@ router.put("/locations/:id", updateLocation);
 router.delete("/locations/:id", deleteLocation);
 
 router.get("/", getProperties);
-router.post("/", addProperty);
+router.post("/", uploader.memoryFile().array("images"), addProperty);
 router.put("/:id", updateProperty);
 router.delete("/:id", deleteProperty);
 export default router;

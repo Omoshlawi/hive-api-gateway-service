@@ -15,5 +15,12 @@ export const configuration = {
     version: config.get("registry.version") as string,
   },
 };
-export { isValidURL, parseMessage, registry } from "./helpers";
+export {
+  isValidURL,
+  parseMessage,
+  registry,
+  expressMulterFileToFile,
+  multerMemoryFilesToFileArray,
+  objectToFormData,
+} from "./helpers";
 export { default as dbHelpers } from "./dbHelpers";

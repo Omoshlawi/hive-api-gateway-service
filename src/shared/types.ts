@@ -13,9 +13,9 @@ export interface UserRequest extends Request {
 }
 
 export interface Entity {
-  id: string;
-  createdAt: Date;
-  updatedAt: Date;
+  _id?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface Repository<T extends Entity, ID> {
