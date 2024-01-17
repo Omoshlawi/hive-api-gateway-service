@@ -3,6 +3,8 @@
   "port": null,
   "db": "",
   "jwt": "",
+  "mapquest":"https://www.mapquestapi.com/",
+  "openroute": "https://api.openrouteservice.org/",
   "registry": {
     "url": "http://localhost:9000",
     "version": "*"
