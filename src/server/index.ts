@@ -6,6 +6,7 @@ import { MEDIA_ROOT, configuration } from "../utils";
 import { handleErrors } from "../middlewares";
 import logger from "../shared/logger";
 import { default as propertyRouter } from "../features/properties/routes";
+import { default as filesRouter } from "../features/files/routes";
 
 export const dbConnection = async () => {
   try {
@@ -36,6 +37,7 @@ export const configureExpressApp = async (app: Application) => {
   //------------------- routes --------------------------------
 
   app.use("/properties", propertyRouter);
+  app.use("/files", filesRouter);
 
   //-------------------end routes-----------------------------
 

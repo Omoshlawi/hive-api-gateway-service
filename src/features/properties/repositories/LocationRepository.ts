@@ -26,6 +26,7 @@ class LocationRepository implements Repository<Location, string> {
     return await ServiceClient.callService("hive-properties-service", {
       url: `properties/locations`,
       method: "GET",
+      params: criteria,
     });
   }
   async updateById(

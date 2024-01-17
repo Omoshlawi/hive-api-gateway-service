@@ -9,7 +9,7 @@ export const getLocations = async (
   next: NextFunction
 ) => {
   try {
-    return res.json(await locationRepo.findAll());
+    return res.json(await locationRepo.findByCriteria(req.query));
   } catch (error) {
     next(error);
   }

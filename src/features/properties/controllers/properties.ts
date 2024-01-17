@@ -14,7 +14,7 @@ export const getProperties = async (
   next: NextFunction
 ) => {
   try {
-    return res.json(await propertyRepo.findAll());
+    return res.json(await propertyRepo.findByCriteria(req.query));
   } catch (error) {
     next(error);
   }
