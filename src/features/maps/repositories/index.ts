@@ -23,7 +23,8 @@ export const mapQuestPlacesSearch = async (search: string) => {
         }));
     }
   } catch (error) {
-    console.error("Error fetching MapQuest Places:", error);
+    // console.error("Error fetching MapQuest Places:", error);
+    throw error;
   }
 };
 
@@ -55,7 +56,8 @@ export const openRoutePlaceSearch = async (search: string) => {
       }));
     }
   } catch (error) {
-    console.error("Error fetching OpenRoute Places:", error);
+    // console.error("Error fetching OpenRoute Places:", error);
+    throw error;
   }
 };
 
@@ -81,7 +83,8 @@ export const mapQuestReverseGeoCode = async ({
       }));
     }
   } catch (error) {
-    console.error("Error fetching MapQuest Reverse GeoCode:", error);
+    // console.error("Error fetching MapQuest Reverse GeoCode:", error);
+    throw error;
   }
 };
 
@@ -108,7 +111,8 @@ export const openRouteReverseGeocode = async ({
       }));
     }
   } catch (error) {
-    console.error("Error fetching OpenRoute Reverse Geocode:", error);
+    // console.error("Error fetching OpenRoute Reverse Geocode:", error);
+    throw error;
   }
 };
 
@@ -140,7 +144,8 @@ export const openRouteMatrix = async ({
       return response.data;
     }
   } catch (error) {
-    console.error("Error fetching OpenRoute Matrix:", error);
+    // console.error("Error fetching OpenRoute Matrix:", error);
+    throw error;
   }
 };
 
@@ -185,7 +190,8 @@ export const mapQuestMatrix = async ({
       }
     }
   } catch (error) {
-    console.error("Error fetching MapQuest Matrix:", error);
+    // console.error("Error fetching MapQuest Matrix:", error);
+    throw error;
   }
 };
 
@@ -258,7 +264,7 @@ export const mapQuestOptimizedRoute = async ({
       };
     }
   } catch (error) {
-    console.error("Error fetching MapQuest Optimized Route:", error);
+    // console.error("Error fetching MapQuest Optimized Route:", error);
+    throw error;
   }
 };
-
