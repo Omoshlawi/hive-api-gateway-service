@@ -3,10 +3,14 @@
   "port": null,
   "db": "",
   "jwt": "",
-  "mapquest":"https://www.mapquestapi.com/",
+  "mapquest": "https://www.mapquestapi.com/",
   "openroute": "https://api.openrouteservice.org/",
   "registry": {
     "url": "http://localhost:9000",
     "version": "*"
+  },
+  "token": {
+    "access_expiry": "2h",
+    "refresh_expiry": "1d"
   }
 }

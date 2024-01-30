@@ -8,6 +8,8 @@ import logger from "../shared/logger";
 import { default as propertyRouter } from "../features/properties/routes";
 import { default as filesRouter } from "../features/files/routes";
 import { default as mapsRouter } from "../features/maps/routes";
+import { default as authRouter } from "../features/auth/routes";
+import { default as usersRouter } from "../features/users/routes";
 
 export const dbConnection = async () => {
   try {
@@ -40,6 +42,8 @@ export const configureExpressApp = async (app: Application) => {
   app.use("/properties", propertyRouter);
   app.use("/files", filesRouter);
   app.use("/maps", mapsRouter);
+  app.use("/api/auth", authRouter);
+  app.use("/users", usersRouter);
 
   //-------------------end routes-----------------------------
 

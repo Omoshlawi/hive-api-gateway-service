@@ -14,6 +14,15 @@ export const configuration = {
     url: config.get("registry.url") as string,
     version: config.get("registry.version") as string,
   },
+  oauth: {
+    google_id: config.get("google_client_id") as string,
+    google_secrete: config.get("google_client_secrete") as string,
+    github_id: config.get("github_client_id") as string,
+    github_secrete: config.get("github_client_secrete") as string,
+    auth_secrete: config.get("auth_secrete") as string,
+    access_token_age: config.get("token.access_expiry") as string,
+    refresh_token_age: config.get("token.refresh_expiry") as string,
+  },
 };
 export {
   isValidURL,
@@ -24,3 +33,4 @@ export {
   objectToFormData,
 } from "./helpers";
 export { default as dbHelpers } from "./dbHelpers";
+export * from "./oauth";
