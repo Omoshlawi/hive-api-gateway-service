@@ -29,6 +29,13 @@ export class AuthRepository implements Repository<User, string> {
       data,
     });
   }
+  async googleSignin(params: Record<string, any>) {
+    return await ServiceClient.callService("hive-auth-service", {
+      url: "api/auth/signin/google",
+      method: "GET",
+      params: params,
+    });
+  }
 
   async login(data: any) {
     return await ServiceClient.callService("hive-auth-service", {

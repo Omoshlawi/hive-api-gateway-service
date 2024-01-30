@@ -21,7 +21,7 @@ export const getProfileInfo = async (code: string) => {
     audience: configuration.oauth.google_id,
   });
   const payload = ticket.getPayload();
-  return payload;
+  return { ...payload, idToken };
 };
 
 export const getToken = async (code: string) => {
