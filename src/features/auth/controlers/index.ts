@@ -1,5 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { authRepo } from "../repositories";
+import { configuration } from "../../../utils";
+import { User } from "../entities";
+import { Token } from "../../../shared/types";
 export * from "./oauthCallbacks";
 export * from "./oauthSignIn";
 
@@ -10,7 +13,15 @@ export const registerUser = async (
 ) => {
   try {
     const user = await authRepo.credentialsSignUp(req.body);
-    return res.json(user);
+    return res
+      .cookie(
+        configuration.authCookieConfig.name,
+        user.token.accessToken,
+        configuration.authCookieConfig.config
+      )
+      .setHeader("x-access-token", user.token.accessToken)
+      .setHeader("x-refresh-token", user.token.refreshToken)
+      .json(user);
   } catch (error) {
     next(error);
   }
@@ -22,8 +33,16 @@ export const loginUser = async (
   next: NextFunction
 ) => {
   try {
-    const user = await authRepo.login(req.body);
-    return res.json(user);
+    const user: { user: User; token: Token } = await authRepo.login(req.body);
+    return res
+      .cookie(
+        configuration.authCookieConfig.name,
+        user.token.accessToken,
+        configuration.authCookieConfig.config
+      )
+      .setHeader("x-access-token", user.token.accessToken)
+      .setHeader("x-refresh-token", user.token.refreshToken)
+      .json(user);
   } catch (error) {
     next(error);
   }
