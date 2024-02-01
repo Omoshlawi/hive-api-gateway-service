@@ -5,11 +5,13 @@ import morgan from "morgan";
 import { MEDIA_ROOT, configuration } from "../utils";
 import { handleErrors } from "../middlewares";
 import logger from "../shared/logger";
+// import cook from "cookie-parser"
 import { default as propertyRouter } from "../features/properties/routes";
 import { default as filesRouter } from "../features/files/routes";
 import { default as mapsRouter } from "../features/maps/routes";
 import { default as authRouter } from "../features/auth/routes";
 import { default as usersRouter } from "../features/users/routes";
+import cookieParser from "cookie-parser";
 
 export const dbConnection = async () => {
   try {
@@ -32,8 +34,9 @@ export const configureExpressApp = async (app: Application) => {
       `[+]${configuration.name}:${configuration.version} enable morgan`
     );
   }
-  app.use(cors());
+  app.use(cors({ origin: "http://localhost:3000", credentials: true }));
   app.use(express.json());
+  app.use(cookieParser(configuration.oauth.auth_secrete));
   app.use(express.static(MEDIA_ROOT));
   // ------------------End middlewares------------------------
 

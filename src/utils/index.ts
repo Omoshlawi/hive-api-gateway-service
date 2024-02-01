@@ -4,6 +4,8 @@ export const BASE_DIR = process.cwd();
 export const MEDIA_ROOT = path.join(BASE_DIR, "media");
 export const MEDIA_URL = "media";
 export const PROFILE_URL = "uploads";
+export const OAUTH_REDIRECT_URL = "http://localhost:3000";
+
 export const configuration = {
   version: require("./../../package.json").version,
   name: require("./../../package.json").name,

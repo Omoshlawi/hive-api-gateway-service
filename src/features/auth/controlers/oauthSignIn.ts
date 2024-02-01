@@ -7,7 +7,13 @@ export const googleSignIn = async (
   next: NextFunction
 ) => {
   try {
-    return res.redirect(getGoogleAuthUrl());
+    const url = getGoogleAuthUrl();
+    // const uri = new URL(url);
+    // uri.searchParams.set(
+    //   "callbackUrl",
+    //   (req.query.callbackUrl ?? "") as string
+    // );
+    return res.redirect(url);
   } catch (e: any) {
     res.status(401).json({ detail: e.message });
   }
