@@ -1,5 +1,5 @@
 import { Router } from "express";
-
+import { default as featuresRouter } from "./features";
 import {
   addPricing,
   deletePricing,
@@ -9,6 +9,7 @@ import {
 } from "../controllers";
 
 const router = Router();
+router.use("/features", featuresRouter);
 router.get("/", getPricings);
 router.post("/", addPricing);
 router.put("/:id", updatePricing);

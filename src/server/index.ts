@@ -35,7 +35,7 @@ export const configureExpressApp = async (app: Application) => {
       `[+]${configuration.name}:${configuration.version} enable morgan`
     );
   }
-  app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+  app.use(cors(/*{ origin: "http://localhost:3000", credentials: true } */));
   app.use(express.json());
   app.use(cookieParser(configuration.oauth.auth_secrete));
   app.use(express.static(MEDIA_ROOT));
