@@ -22,6 +22,12 @@ class ListingsRepository implements Repository<Listing, string> {
       method: "GET",
     });
   }
+  findByCategory(category:string): Promise<Listing[]> {
+    return ServiceClient.callService("hive-property-listing-service", {
+      url: `listings/categories/${category}`,
+      method: "GET",
+    });
+  }
   findByCriteria(criteria: Record<string, any>): Promise<Listing[]> {
     return ServiceClient.callService("hive-property-listing-service", {
       url: `listings`,

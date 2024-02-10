@@ -12,6 +12,7 @@ import { default as mapsRouter } from "../features/maps/routes";
 import { default as authRouter } from "../features/auth/routes";
 import { default as usersRouter } from "../features/users/routes";
 import { default as pricingRouter } from "../features/sass/routes";
+import { default as listingRouter } from "../features/listing/routes";
 import cookieParser from "cookie-parser";
 
 export const dbConnection = async () => {
@@ -49,6 +50,7 @@ export const configureExpressApp = async (app: Application) => {
   app.use("/api/auth", authRouter);
   app.use("/users", usersRouter);
   app.use("/pricing", pricingRouter);
+  app.use("/listings", listingRouter);
 
   //-------------------end routes-----------------------------
 
