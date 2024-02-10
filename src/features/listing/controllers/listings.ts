@@ -15,23 +15,6 @@ export const getListings = async (
   }
 };
 
-export const getListingsByCategory = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const categoryValidator = z
-      .enum(["rentals", "sales"])
-      .safeParse(req.params.category);
-    if (!categoryValidator.success)
-      throw { status: 404, errors: { detail: "Not found" } };
-    const results = await listingRepo.findByCategory(req.params.category);
-    return res.json(results);
-  } catch (error) {
-    return next(error);
-  }
-};
 export const getListing = async (
   req: Request,
   res: Response,
