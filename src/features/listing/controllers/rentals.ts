@@ -1,6 +1,12 @@
 import { NextFunction, Request, Response } from "express";
 import { z } from "zod";
 import { rentalListingRepo } from "../repositories";
+import {
+  configuration,
+  expressMulterFileToFile,
+  objectToFormData,
+} from "../../../utils";
+import { fileRepo } from "../../files/repositories";
 
 export const getRentalListings = async (
   req: Request,
@@ -37,7 +43,21 @@ export const addRentalListing = async (
   next: NextFunction
 ) => {
   try {
-    return res.json(await rentalListingRepo.create(req.body));
+    if (!req.file)
+      throw {
+        status: 400,
+        errors: { coverImage: { _errors: ["Cover image is Required"] } },
+      };
+    const file = expressMulterFileToFile(req.file);
+    const files = await fileRepo.createMany({
+      files: [file],
+      path: "listings/rentals",
+      serviceName: configuration.name,
+      serviceVersion: configuration.version,
+      fieldName: "coverImage",
+    });
+    const listing = { ...req.body, coverImage: files[0] };
+    return res.json(await rentalListingRepo.create(listing));
   } catch (error) {
     next(error);
   }

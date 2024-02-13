@@ -1,5 +1,6 @@
 import ServiceClient from "../../../shared/ServiceClient";
 import { Repository } from "../../../shared/types";
+import { objectToFormData } from "../../../utils";
 import { FileUpload } from "../entities";
 
 export class FileUploadRepository implements Repository<FileUpload, string> {
@@ -12,11 +13,17 @@ export class FileUploadRepository implements Repository<FileUpload, string> {
       data: arg,
     });
   }
-  async createMany(data: FormData): Promise<FileUpload[]> {
+  async createMany(data: {
+    files: File[];
+    path?: string;
+    serviceName: string;
+    serviceVersion: string;
+    fieldName: string;
+  }): Promise<FileUpload[]> {
     return await ServiceClient.callService("hive-files-service", {
       method: "POST",
       url: `files/upload/array`,
-      data: data,
+      data: objectToFormData(data),
     });
   }
   findOneById(id: string): Promise<FileUpload | undefined> {

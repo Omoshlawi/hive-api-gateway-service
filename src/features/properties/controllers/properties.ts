@@ -27,14 +27,13 @@ export const addProperty = async (
 ) => {
   try {
     const files = multerMemoryFilesToFileArray(req.files);
-    const data = objectToFormData({
+    const file = await fileRepo.createMany({
       files,
       path: "properties",
       serviceName: configuration.name,
       serviceVersion: configuration.version,
       fieldName: "images",
     });
-    const file = await fileRepo.createMany(data);
     const property_ = { ...req.body, images: file };
     const property = await propertyRepo.create(property_);
     return res.json(property);
