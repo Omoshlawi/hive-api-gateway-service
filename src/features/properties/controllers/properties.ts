@@ -20,6 +20,19 @@ export const getProperties = async (
   }
 };
 
+export const getProperty = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const property = await propertyRepo.findOneById(req.params.id);
+    return res.json(property);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const addProperty = async (
   req: Request,
   res: Response,
