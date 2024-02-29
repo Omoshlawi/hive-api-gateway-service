@@ -6,3 +6,8 @@ export interface FileUpload extends Entity {
   serviceVersion: string;
   path?: string;
 }
+
+
+export interface UploadFile extends Entity {
+  path: string;
+}
