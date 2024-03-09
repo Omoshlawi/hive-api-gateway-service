@@ -31,3 +31,18 @@ export const checkStatus = async (
     next(error);
   }
 };
+export const stkCallBack = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const _res = await mpesaRepo.stkCallback(
+      req.body,
+      req.header("x-access-token")
+    );
+    return res.json(_res);
+  } catch (error) {
+    next(error);
+  }
+};

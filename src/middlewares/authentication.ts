@@ -14,6 +14,7 @@ const authenticate = async (
   if (!token)
     return res.status(401).json({ detail: "Unauthorized - Token missing" });
   try {
+    req.headers = { ...req.headers, "x-access-token": token };
     const user = await authRepo.getUserByToken(token);
     (req as UserRequest).user = user;
     return next();

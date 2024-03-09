@@ -36,6 +36,14 @@ export class MpesaTransactionRepository
       data,
     });
   }
+  async stkCallback(data: any, token?: string) {
+    return await ServiceClient.callService("hive-billing-service", {
+      method: "POST",
+      url: `payments/mpesa/callback`,
+      headers: { "x-access-token": token },
+      data,
+    });
+  }
   async findOneById(id: string): Promise<MpesaTransaction | undefined> {
     throw new Error("Method not implemented.");
   }

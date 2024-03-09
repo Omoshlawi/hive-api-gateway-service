@@ -16,7 +16,7 @@ import { default as listingRouter } from "../features/listing/routes";
 import { default as agentsRouter } from "../features/agents/routes";
 import { default as paymentRouter } from "../features/billing/routes";
 import cookieParser from "cookie-parser";
-import authenticate from "../middlewares/authentication";
+import { requireAuthenticated } from "../middlewares";
 
 export const dbConnection = async () => {
   try {
@@ -55,7 +55,7 @@ export const configureExpressApp = async (app: Application) => {
   app.use("/pricing", pricingRouter);
   app.use("/listings", listingRouter);
   app.use("/agents", agentsRouter);
-  app.use("/payments", authenticate, paymentRouter);
+  app.use("/payments", paymentRouter);
 
   //-------------------end routes-----------------------------
 
