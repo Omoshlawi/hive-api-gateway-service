@@ -6,10 +6,18 @@ import {
   getAgents,
   updateAgent,
 } from "../controllers/agents";
+import { uploader } from "../../../middlewares";
 
 const router = Router();
 router.get("/", getAgents);
-router.post("/", addAgent);
+router.post(
+  "/",
+  uploader.memoryFile().fields([
+    { name: "profilePic", maxCount: 1 },
+    { name: "licenses", maxCount: 5 },
+  ]),
+  addAgent
+);
 router.get("/:id", getAgent);
 router.put("/:id", updateAgent);
 router.delete("/:id", deleteAgent);

@@ -16,16 +16,26 @@ export interface Feature extends Entity {
   description: string | null;
   createdAt: Date;
   updatedAt: Date;
-  featurePricing: FeaturePricing[]
-
+  featurePricing: FeaturePricing[];
 }
 
-export interface FeaturePricing {
-    id: string;
-    pricingId?: string;
-    featureId?: string;
-    limit?: number;
-    included?: boolean;
-    pricing?:Pricing
-    
+export interface FeaturePricing extends Entity {
+  id: string;
+  pricingId?: string;
+  featureId?: string;
+  limit?: number;
+  included?: boolean;
+  pricing?: Pricing;
+}
+
+export interface UserSubscription extends Entity {
+  id: string;
+  user: string;
+  featurePricingLimitId?: string;
+  featurePricing: FeaturePricing;
+  startDate: string;
+  endDate: string;
+  status: "active" | "cancelled" | "expired";
+  cancellationDate?: string;
+  cancellationReason?: string;
 }
