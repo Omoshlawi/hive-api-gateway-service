@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { APIException } from "../../../shared/exceprions";
-import { mpesaRepo } from "../repositories";
+import { mpesaRepo, paymentsRepo } from "../repositories";
 export const makeMpesaPayment = async (
   req: Request,
   res: Response,
@@ -11,6 +11,18 @@ export const makeMpesaPayment = async (
       req.body,
       req.header("x-access-token")
     );
+    return res.json(_res);
+  } catch (error: any) {
+    next(error);
+  }
+};
+export const getMyPayments = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const _res = await paymentsRepo.findAll(req.header("x-access-token"));
     return res.json(_res);
   } catch (error: any) {
     next(error);

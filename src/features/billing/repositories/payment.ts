@@ -17,8 +17,12 @@ export class PaymentsRepository implements Repository<Payment, string> {
       headers: { "x-access-token": token },
     });
   }
-  findAll(): Promise<Payment[]> {
-    throw new Error("Method not implemented.");
+  findAll(token?: string): Promise<Payment[]> {
+    return ServiceClient.callService("hive-billing-service", {
+      method: "GET",
+      url: `payments`,
+      headers: { "x-access-token": token },
+    });
   }
   findByCriteria(criteria: Record<string, any>): Promise<Payment[]> {
     throw new Error("Method not implemented.");
