@@ -1,15 +1,16 @@
 import { Entity } from "../../../shared/types";
+import { Agent } from "../../agents/entities";
 import { FileUpload, UploadFile } from "../../files/entities";
 
-export interface Agent extends Entity {
+export interface Agency extends Entity {
   id: string;
-  firstName: string;
-  lastName: string;
-  bio: string;
-  user?: string;
-  profilePic: UploadFile;
-  specialties?: string[];
-  licenseNumber?: string | null;
+  name: string;
+  description?: string;
+  memberShips: AgencyMembership[];
+  website?: string;
+  logo: UploadFile;
+  specialties: string[];
+  tags: string[];
   email: string;
   phoneNumber: string;
   city: string;
@@ -25,8 +26,16 @@ export interface Agent extends Entity {
 
 export interface AgentArchievement extends Entity {
   id: string;
-  agentId?: string;
-  agent?: Agent;
+  agencyId?: string;
+  agency?: Agency;
   attachments: Record<string, any>;
   description: string;
+}
+
+export interface AgencyMembership extends Entity {
+  id: string;
+  agencyId?: string;
+  agency?: Agency;
+  agent: Partial<Agent>;
+  note?: string;
 }

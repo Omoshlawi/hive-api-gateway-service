@@ -17,6 +17,7 @@ import { default as agentsRouter } from "../features/agents/routes";
 import { default as paymentRouter } from "../features/billing/routes";
 import cookieParser from "cookie-parser";
 import { requireAuthenticated } from "../middlewares";
+import { default as agenciesRouter } from "../features/agencies/routes";
 
 export const dbConnection = async () => {
   try {
@@ -56,6 +57,7 @@ export const configureExpressApp = async (app: Application) => {
   app.use("/listings", listingRouter);
   app.use("/agents", agentsRouter);
   app.use("/payments", paymentRouter);
+  app.use("/agencies", agenciesRouter);
 
   //-------------------end routes-----------------------------
 

@@ -42,14 +42,11 @@ export const addAgent = async (
   next: NextFunction
 ) => {
   try {
-    const { licenses, profilePic } = req.files as {
-      [fieldname: string]: Express.Multer.File[];
-    };
     let uploadedProfilePic;
-    let uploadedLicenses;
+
     // 1.Upload profile pic
-    if (profilePic?.length > 0) {
-      const profilePic_ = multerMemoryFilesToFileArray(profilePic);
+    if (req.file) {
+      const profilePic_ = multerMemoryFilesToFileArray([req.file]);
       uploadedProfilePic = (
         await fileRepo.createMany({
           files: profilePic_,
@@ -60,22 +57,9 @@ export const addAgent = async (
         })
       )[0];
     }
-    // 1.Upload licences docs
-    if (licenses?.length > 0) {
-      const licenses_ = multerMemoryFilesToFileArray(licenses);
-      uploadedLicenses = await fileRepo.createMany({
-        files: licenses_,
-        path: "agents/licences",
-        serviceName: configuration.name,
-        serviceVersion: configuration.version,
-        fieldName: "licenses",
-      });
-    }
-    // TODO Validate file type
 
     const agent = await agentsRepo.create({
       ...req.body,
-      licenses: uploadedLicenses,
       profilePic: uploadedProfilePic,
     });
     return res.status(201).json(agent);
