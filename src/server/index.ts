@@ -18,6 +18,7 @@ import { default as paymentRouter } from "../features/billing/routes";
 import cookieParser from "cookie-parser";
 import { requireAuthenticated } from "../middlewares";
 import { default as agenciesRouter } from "../features/agencies/routes";
+import { default as ownershipsRouter } from "../features/ownerships/routes";
 
 export const dbConnection = async () => {
   try {
@@ -58,6 +59,7 @@ export const configureExpressApp = async (app: Application) => {
   app.use("/agents", agentsRouter);
   app.use("/payments", paymentRouter);
   app.use("/agencies", agenciesRouter);
+  app.use(ownershipsRouter);
 
   //-------------------end routes-----------------------------
 
