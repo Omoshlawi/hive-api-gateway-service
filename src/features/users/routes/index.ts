@@ -6,12 +6,16 @@ import {
   updateProfile,
   viewProfile,
 } from "../controlers";
-import { requireAuthenticated } from "../../../middlewares";
+import { requireAuthenticated, uploader } from "../../../middlewares";
 
 const router = Router();
 router.get("/", getUsers);
 router.get("/profile", requireAuthenticated, viewProfile);
-router.post("/profile", requireAuthenticated, updateProfile);
+router.post(
+  "/profile",
+  [requireAuthenticated, uploader.memoryFile().single("image")],
+  updateProfile
+);
 router.get("/:id", getUser);
 router.delete("/:id", deleteUser);
 export default router;

@@ -3,6 +3,8 @@ import { userRepo } from "../repositories";
 import { UserRequest } from "../../../shared/types";
 import { APIException } from "../../../shared/exceprions";
 import { z } from "zod";
+import { configuration, multerMemoryFilesToFileArray } from "../../../utils";
+import { fileRepo } from "../../files/repositories";
 
 export const getUsers = async (
   req: Request,
@@ -56,11 +58,32 @@ export const updateProfile = async (
   next: NextFunction
 ) => {
   try {
+    // content-type': 'multipart/form-data'
+    // const contentType = req.header("content-type");
+    let uploadedProfilePic;
+
+    // 1.Upload profile pic
+    if (req.file) {
+      const profilePic_ = multerMemoryFilesToFileArray([req.file]);
+      uploadedProfilePic = (
+        await fileRepo.createMany({
+          files: profilePic_,
+          path: "persons/avatar",
+          serviceName: configuration.name,
+          serviceVersion: configuration.version,
+          fieldName: "image",
+        })
+      )[0];
+    }
     const user = await userRepo.updateById(
       (req as UserRequest).user.id,
-      req.body,
+      {
+        ...req.body,
+        image: uploadedProfilePic,
+      },
       req.header("x-access-token") as string
     );
+
     return res.json(user);
   } catch (error) {
     next(error);

@@ -61,8 +61,8 @@ class UserRepository {
     token: string
   ): Promise<User> {
     return await ServiceClient.callService("hive-auth-service", {
-      url: `users/${id}`,
-      method: "PUT",
+      url: `users/profile`,
+      method: "POST",
       headers: { "x-access-token": token },
       data: updates,
     });
