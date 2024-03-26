@@ -43,23 +43,45 @@ export const createAgency = async (
 ) => {
   try {
     let logo;
+    let coverImage;
 
-    // 1.Upload profile pic
-    if (req.file) {
-      const pic_ = multerMemoryFilesToFileArray([req.file]);
-      logo = (
-        await fileRepo.createMany({
-          files: pic_,
-          path: "agencies/logo",
-          serviceName: configuration.name,
-          serviceVersion: configuration.version,
-          fieldName: "logo",
-        })
-      )[0];
+    // 1.Upload images
+    if (req.files) {
+      const { logo: logoMemFile, coverImage: coverImageMemFile } =
+        req.files as {
+          [fieldname: string]: Express.Multer.File[];
+        };
+      // Upload logo
+      if (logoMemFile && logoMemFile.length > 0) {
+        const logo_ = multerMemoryFilesToFileArray(logoMemFile);
+        logo = (
+          await fileRepo.createMany({
+            files: logo_,
+            path: "agencies/logo",
+            serviceName: configuration.name,
+            serviceVersion: configuration.version,
+            fieldName: "logo",
+          })
+        )[0];
+      }
+      // Upload cover image
+      if (coverImageMemFile && coverImageMemFile.length > 0) {
+        const logo_ = multerMemoryFilesToFileArray(coverImageMemFile);
+        coverImage = (
+          await fileRepo.createMany({
+            files: logo_,
+            path: "agencies/cover",
+            serviceName: configuration.name,
+            serviceVersion: configuration.version,
+            fieldName: "coverImage",
+          })
+        )[0];
+      }
     }
     const agency = await agencyRepo.create({
       ...req.body,
       logo: logo,
+      coverImage: coverImage,
     });
     return res.json(agency);
   } catch (error) {

@@ -8,7 +8,12 @@ router.get("/", getAgencies);
 router.get("/:id", getAgency);
 router.post(
   "/",
-  [/*authenticate,*/ uploader.memoryFile().single("logo")],
+  [
+    /*authenticate,*/ uploader.memoryFile().fields([
+      { name: "logo", maxCount: 1 },
+      { name: "coverImage", maxCount: 1 },
+    ]),
+  ],
   createAgency
 );
 export default router;
