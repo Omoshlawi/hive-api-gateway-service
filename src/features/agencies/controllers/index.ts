@@ -80,8 +80,8 @@ export const createAgency = async (
     }
     const agency = await agencyRepo.create({
       ...req.body,
-      logo: logo,
-      coverImage: coverImage,
+      logo,
+      coverImage
     });
     return res.json(agency);
   } catch (error) {

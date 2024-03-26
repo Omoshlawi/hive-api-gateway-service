@@ -42,25 +42,47 @@ export const addAgent = async (
   next: NextFunction
 ) => {
   try {
-    let uploadedProfilePic;
+    let image;
+    let coverImage;
 
-    // 1.Upload profile pic
-    if (req.file) {
-      const profilePic_ = multerMemoryFilesToFileArray([req.file]);
-      uploadedProfilePic = (
-        await fileRepo.createMany({
-          files: profilePic_,
-          path: "agents/avatar",
-          serviceName: configuration.name,
-          serviceVersion: configuration.version,
-          fieldName: "profilePic",
-        })
-      )[0];
+    // 1.Upload images
+    if (req.files) {
+      const { image: logoMemFile, coverImage: coverImageMemFile } =
+        req.files as {
+          [fieldname: string]: Express.Multer.File[];
+        };
+      // Upload logo
+      if (logoMemFile && logoMemFile.length > 0) {
+        const logo_ = multerMemoryFilesToFileArray(logoMemFile);
+        image = (
+          await fileRepo.createMany({
+            files: logo_,
+            path: "agents/avatar",
+            serviceName: configuration.name,
+            serviceVersion: configuration.version,
+            fieldName: "image",
+          })
+        )[0];
+      }
+      // Upload cover image
+      if (coverImageMemFile && coverImageMemFile.length > 0) {
+        const logo_ = multerMemoryFilesToFileArray(coverImageMemFile);
+        coverImage = (
+          await fileRepo.createMany({
+            files: logo_,
+            path: "agents/cover",
+            serviceName: configuration.name,
+            serviceVersion: configuration.version,
+            fieldName: "coverImage",
+          })
+        )[0];
+      }
     }
 
     const agent = await agentsRepo.create({
       ...req.body,
-      profilePic: uploadedProfilePic,
+      image,
+      coverImage,
     });
     return res.status(201).json(agent);
   } catch (error) {
