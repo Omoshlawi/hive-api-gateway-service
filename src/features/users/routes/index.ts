@@ -7,6 +7,7 @@ import {
   viewProfile,
 } from "../controlers";
 import { requireAuthenticated, uploader } from "../../../middlewares";
+export { default as personRouter } from "./person";
 
 const router = Router();
 router.get("/", getUsers);

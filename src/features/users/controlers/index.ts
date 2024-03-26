@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import { userRepo } from "../repositories";
 import { UserRequest } from "../../../shared/types";
-import { APIException } from "../../../shared/exceprions";
 import { z } from "zod";
 import { configuration, multerMemoryFilesToFileArray } from "../../../utils";
 import { fileRepo } from "../../files/repositories";
+export * from "./person";
 
 export const getUsers = async (
   req: Request,

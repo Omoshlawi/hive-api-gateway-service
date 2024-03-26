@@ -10,7 +10,7 @@ import { default as propertyRouter } from "../features/properties/routes";
 import { default as filesRouter } from "../features/files/routes";
 import { default as mapsRouter } from "../features/maps/routes";
 import { default as authRouter } from "../features/auth/routes";
-import { default as usersRouter } from "../features/users/routes";
+import { personRouter, default as usersRouter } from "../features/users/routes";
 import { default as pricingRouter } from "../features/sass/routes";
 import { default as listingRouter } from "../features/listing/routes";
 import { default as agentsRouter } from "../features/agents/routes";
@@ -59,6 +59,8 @@ export const configureExpressApp = async (app: Application) => {
   app.use("/agents", agentsRouter);
   app.use("/payments", paymentRouter);
   app.use("/agencies", agenciesRouter);
+  app.use("/person", personRouter);
+
   app.use(ownershipsRouter);
 
   //-------------------end routes-----------------------------

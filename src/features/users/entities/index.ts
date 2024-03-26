@@ -14,17 +14,23 @@ export interface Account extends Entity {
 }
 
 export interface User extends Entity {
-  name?: string;
-  firstName?: string;
-  lastName?: string;
-  email?: string;
+  person?: Person;
   username?: string;
-  phoneNumber?: string;
-  // gender  ?:        Gender
   accountVerified?: Date;
-  image?: string;
   password?: string;
   lastLogin?: Date;
   active: boolean;
   accounts: Account[];
+}
+
+export interface Person extends Entity {
+  userId?: string;
+  user?: User;
+  name?: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  phoneNumber?: string;
+  gender?: "MALE" | "FEMALE" | "UKNOWN";
+  image?: string;
 }
