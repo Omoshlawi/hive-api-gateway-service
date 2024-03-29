@@ -1,14 +1,23 @@
 import { Router } from "express";
 import {
   addAgent,
+  addArchievements,
   deleteAgent,
   getAgent,
   getAgents,
+  getArchievements,
   updateAgent,
-} from "../controllers/agents";
+} from "../controllers";
 import { uploader } from "../../../middlewares";
 
 const router = Router();
+router.get("/:agentId/archivements", getArchievements);
+router.post(
+  "/:agentId/archivements",
+  uploader.memoryFile().array("attachments"),
+  addArchievements
+);
+
 router.get("/", getAgents);
 router.post(
   "/",
