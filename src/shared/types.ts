@@ -19,12 +19,16 @@ export interface Entity {
 }
 
 export interface Repository<T extends Entity, ID> {
-  create(entity: T): Promise<T>;
-  findOneById(id: string): Promise<T | undefined>;
-  findAll(): Promise<T[]>;
-  findByCriteria(criteria: Record<string, any>): Promise<T[]>;
-  updateById(id: ID, updates: Partial<T>): Promise<T | undefined>;
-  deleteById(id: ID): Promise<void>;
+  create(entity: T, ...args: any[]): Promise<T>;
+  findOneById(id: string, ...args: any[]): Promise<T | undefined>;
+  findAll(...args: any[]): Promise<T[]>;
+  findByCriteria(criteria: Record<string, any>, ...args: any[]): Promise<T[]>;
+  updateById(
+    id: ID,
+    updates: Partial<T>,
+    ...args: any[]
+  ): Promise<T | undefined>;
+  deleteById(id: ID, ...args: any[]): Promise<void>;
 }
 
 export abstract class BaseEntity implements Entity {

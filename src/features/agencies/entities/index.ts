@@ -17,14 +17,14 @@ export interface Agency extends Entity {
   country: string;
   state: string;
   zipCode?: string;
-  achievements: AgentArchievement[];
+  achievements: AgencyArchievement[];
   facebook?: string;
   linkedIn?: string;
   twitter?: string;
   instagram?: string;
 }
 
-export interface AgentArchievement extends Entity {
+export interface AgencyArchievement extends Entity {
   id: string;
   agencyId?: string;
   agency?: Agency;

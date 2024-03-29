@@ -3,6 +3,8 @@ import { agencyRepo } from "../repositories";
 import { z } from "zod";
 import { configuration, multerMemoryFilesToFileArray } from "../../../utils";
 import { fileRepo } from "../../files/repositories";
+export * from "./agencyMembershipController";
+export * from "./achievements";
 
 export const getAgencies = async (
   req: Request,
