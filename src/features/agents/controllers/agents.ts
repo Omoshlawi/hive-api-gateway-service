@@ -10,7 +10,7 @@ export const getAgents = async (
   next: NextFunction
 ) => {
   try {
-    const agents = await agentsRepo.findAll();
+    const agents = await agentsRepo.findByCriteria(req.query);
     return res.json(agents);
   } catch (error) {
     return next(error);

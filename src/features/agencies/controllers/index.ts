@@ -12,7 +12,7 @@ export const getAgencies = async (
   next: NextFunction
 ) => {
   try {
-    const agency = await agencyRepo.findAll();
+    const agency = await agencyRepo.findByCriteria(req.query);
     return res.json(agency);
   } catch (error) {
     next(error);

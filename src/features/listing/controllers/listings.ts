@@ -8,7 +8,7 @@ export const getListings = async (
   next: NextFunction
 ) => {
   try {
-    const results = await listingRepo.findAll();
+    const results = await listingRepo.findByCriteria(req.query);
     return res.json(results);
   } catch (error) {
     return next(error);
