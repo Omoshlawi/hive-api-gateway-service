@@ -1,4 +1,5 @@
 import { Entity } from "../../../shared/types";
+import { Person } from "../../users/entities";
 
 export interface Listing extends Entity {
   id: string;
@@ -35,4 +36,13 @@ export interface SaleListing extends Entity {
   downPaymentRequired: number;
   closingDate: Date;
   mortgageOptions?: string;
+}
+
+export interface TourSchedule extends Entity {
+  id: string;
+  listingId: string;
+  date: Date;
+  time: string;
+  person?: Person;
+  notes?: string;
 }

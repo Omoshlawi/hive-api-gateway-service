@@ -1,6 +1,8 @@
 import { Entity } from "../../../shared/types";
+import { UploadFile } from "../../files/entities";
 
 export interface Account extends Entity {
+  id: string;
   userId: string;
   type: string;
   provider: string;
@@ -14,17 +16,22 @@ export interface Account extends Entity {
 }
 
 export interface User extends Entity {
-  name?: string;
-  firstName?: string;
-  lastName?: string;
-  email?: string;
+  id: string;
   username?: string;
-  phoneNumber?: string;
-  // gender  ?:        Gender
+  person?: Person;
   accountVerified?: Date;
-  image?: string;
   password?: string;
   lastLogin?: Date;
   active: boolean;
   accounts: Account[];
+}
+
+export interface Person extends Entity {
+  name?: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  gender?: "MALE" | "FEMALE" | "UNKNOWN";
+  image?: UploadFile;
+  phoneNumber?: string;
 }

@@ -8,10 +8,12 @@ import {
 } from "../controllers";
 import { default as rentalRouter } from "./rentals";
 import { default as salesRouter } from "./sales";
+import { default as tourRouter } from "./tour";
 
 const router = Router();
 router.use("/rentals", rentalRouter);
 router.use("/sales", salesRouter);
+router.use("/tours", tourRouter);
 router.get("/", getListings);
 router.post("/", addListing);
 router.get("/:id", getListing);
