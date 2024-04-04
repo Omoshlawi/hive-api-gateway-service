@@ -1,10 +1,21 @@
 import { NextFunction, Request, Response } from "express";
 import { userRepo } from "../repositories";
 import { UserRequest } from "../../../shared/types";
-import { z } from "zod";
+import { any, z } from "zod";
 import { configuration, multerMemoryFilesToFileArray } from "../../../utils";
 import { fileRepo } from "../../files/repositories";
+import { ownerRepo } from "../../ownerships/repositories";
+import { agencyRepo } from "../../agencies/repositories";
+import { agentsRepo } from "../../agents/repositories";
 export * from "./person";
+
+const exce_ = async (func: any, ...args: any[]) => {
+  try {
+    return await func(...args);
+  } catch (error) {
+    return null;
+  }
+};
 
 export const getUserRoles = async (
   req: Request,
@@ -12,11 +23,20 @@ export const getUserRoles = async (
   next: NextFunction
 ) => {
   try {
-
+    const personId = (req as any).user?.person.id;
     const userRoles = await Promise.all([
-      
-    ])
-    return res.json({ roles: [] });
+      exce_(ownerRepo.findOneById, personId, { by: "person" }),
+      exce_(agencyRepo.findOneById, personId, { by: "person" }),
+      exce_(agentsRepo.findOneById, personId, { by: "person" }),
+    ]);
+    return res.json({
+      roles: userRoles.reduce<any>((prev, curr, i) => {
+        if (i === 0 && curr) return { ...prev, owner: curr };
+        if (i === 1 && curr) return { ...prev, agency: curr };
+        if (i === 2 && curr) return { ...prev, agent: curr };
+        return prev;
+      }, {}),
+    });
   } catch (error) {
     next(error);
   }
