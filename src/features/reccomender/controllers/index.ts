@@ -3,6 +3,7 @@ import { z } from "zod";
 import { searchRepo, resourceRepo } from "../repositories";
 import { listingRepo } from "../../listing/repositories";
 import { Search } from "../entities";
+import { randomInt } from "crypto"; // Import for random number generation
 
 export const getSearches = async (
   req: Request,
@@ -37,24 +38,39 @@ export const recommendListings = async (
 ) => {
   try {
     // if user id authenticated
-
     if ((req as any).user) {
-      // TODO Perfom filter at db level
+      // TODO Perform filter at db level
 
       const searches = (
         (await searchRepo.findAll((req as any).user.person.id)) as any
       ).results.filter(
         (search: Search) => search.resource.pathName === "/listings"
-      )[0] as Search;
-      return res.json(
-        await listingRepo.findByCriteria(
-          searches?.params.reduce<any>(
+      );
+
+      // Check if there are any search results
+      if (searches.length > 0) {
+        // Generate a random index within the bounds of the search results array
+        const randomIndex = Math.floor(Math.random() * searches.length);
+
+        // Select a random search object from the array using the random index
+        const randomSearch = searches[randomIndex] as Search;
+
+        // Retrieve listings based on the random search
+        const recommendedListings = await listingRepo.findByCriteria(
+          randomSearch?.params.reduce<any>(
             (prv, { name, value }) => ({ ...prv, [name]: value }),
             {}
           ) ?? {}
-        )
-      );
+        );
+
+        return res.json(recommendedListings);
+      } else {
+        // No search results found for "/listings"
+        return res.json({ results: [] });
+      }
     }
+
+    // User not authenticated
     return res.json({ results: [] });
   } catch (error) {
     next(error);
