@@ -30,13 +30,13 @@ export const authenticateOptional = async (
   // const cookieToken = JSON.parse(req.cookies["session-token"] ?? null);
   const cookieToken = req.cookies["session-token"];
   const token = req.header("x-access-token") ?? cookieToken;
-  if (!token) next();
+  if (!token) return next();
   try {
     req.headers = { ...req.headers, "x-access-token": token };
     const user = await authRepo.getUserByToken(token);
     (req as UserRequest).user = user;
     return next();
   } catch (err: any) {
-    next();
+    return next();
   }
 };
