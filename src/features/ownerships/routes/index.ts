@@ -4,6 +4,7 @@ import {
   addOwnerShip,
   deleteOwner,
   deleteOwnerShip,
+  getOwner,
   getOwnerShips,
   getOwners,
   updateOwner,
@@ -14,6 +15,7 @@ const ownerBaseUrl = "/owners";
 const ownerShipBaseUrl = "/ownerships";
 
 router.get(`${ownerBaseUrl}`, getOwners);
+router.get(`${ownerBaseUrl}/:id`, getOwner);
 router.post(`${ownerBaseUrl}`, addOwner);
 router.put(`${ownerBaseUrl}/:id`, updateOwner);
 router.delete(`${ownerBaseUrl}/:id`, deleteOwner);

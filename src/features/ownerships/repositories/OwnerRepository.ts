@@ -12,10 +12,14 @@ class OwnerRepository implements Repository<Owner, string> {
     });
   }
 
-  async findOneById(id: string): Promise<Owner | undefined> {
+  async findOneById(
+    id: string,
+    params: Record<string, any>
+  ): Promise<Owner | undefined> {
     return await ServiceClient.callService("hive-ownership-service", {
       method: "GET",
       url: `owners/${id}`,
+      params,
     });
   }
   async findAll(): Promise<Owner[]> {

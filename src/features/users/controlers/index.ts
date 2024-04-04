@@ -6,6 +6,22 @@ import { configuration, multerMemoryFilesToFileArray } from "../../../utils";
 import { fileRepo } from "../../files/repositories";
 export * from "./person";
 
+export const getUserRoles = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+
+    const userRoles = await Promise.all([
+      
+    ])
+    return res.json({ roles: [] });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const getUsers = async (
   req: Request,
   res: Response,

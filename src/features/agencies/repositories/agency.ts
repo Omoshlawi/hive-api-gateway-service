@@ -10,10 +10,11 @@ class AgencyRepository implements Repository<Agency, string> {
       data: entity,
     });
   }
-  findOneById(id: string): Promise<any> {
+  findOneById(id: string, params: Record<string, any>): Promise<any> {
     return ServiceClient.callService("hive-agencies-service", {
       method: "GET",
       url: `agencies/${id}`,
+      params,
     });
   }
   findAll(): Promise<Agency[]> {

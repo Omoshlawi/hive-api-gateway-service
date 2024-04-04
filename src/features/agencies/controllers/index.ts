@@ -45,7 +45,7 @@ export const getAgency = async (
         errors: "Agency not found or doesn't exist.",
       });
     }
-    const agency = await agencyRepo.findOneById(idValidation.data);
+    const agency = await agencyRepo.findOneById(idValidation.data, req.query);
     return res.json(agency);
   } catch (error) {
     next(error);

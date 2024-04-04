@@ -10,10 +10,14 @@ export class AgentRepository implements Repository<Agent, string> {
       data: entity,
     });
   }
-  findOneById(id: string): Promise<Agent | undefined> {
+  findOneById(
+    id: string,
+    params: Record<string, any>
+  ): Promise<Agent | undefined> {
     return ServiceClient.callService("hive-agents-service", {
       url: `agents/${id}`,
       method: "GET",
+      params
     });
   }
   findAll(): Promise<Agent[]> {

@@ -12,6 +12,19 @@ const getOwners = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const getOwner = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const idValidation = z.string().uuid().safeParse(req.params.id);
+    if (!idValidation.success) {
+      throw { status: 404, errors: { detail: "Ahent not found" } };
+    }
+    const owners = await ownerRepo.findOneById(idValidation.data, req.query);
+    return res.json(owners);
+  } catch (err) {
+    next(err);
+  }
+};
+
 const addOwner = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const owner = await ownerRepo.create(req.body);
@@ -50,4 +63,4 @@ const deleteOwner = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export { addOwner, updateOwner, getOwners, deleteOwner };
+export { addOwner, updateOwner, getOwners, deleteOwner, getOwner };

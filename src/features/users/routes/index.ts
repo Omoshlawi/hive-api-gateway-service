@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   deleteUser,
   getUser,
+  getUserRoles,
   getUsers,
   updateProfile,
   viewProfile,
@@ -11,6 +12,8 @@ export { default as personRouter } from "./person";
 
 const router = Router();
 router.get("/", getUsers);
+router.get("/roles", requireAuthenticated, getUserRoles);
+
 router.get("/profile", requireAuthenticated, viewProfile);
 router.post(
   "/profile",

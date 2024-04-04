@@ -43,7 +43,7 @@ export const getAgent = async (
         errors: "Agent not found!",
       });
     }
-    const agent = await agentsRepo.findOneById(idValidation.data);
+    const agent = await agentsRepo.findOneById(idValidation.data, req.query);
     return res.json(agent);
   } catch (error) {
     return next(error);
