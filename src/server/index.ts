@@ -19,6 +19,7 @@ import cookieParser from "cookie-parser";
 import { requireAuthenticated } from "../middlewares";
 import { default as agenciesRouter } from "../features/agencies/routes";
 import { default as ownershipsRouter } from "../features/ownerships/routes";
+import { default as recommenderRouter } from "../features/reccomender/routes";
 
 export const dbConnection = async () => {
   try {
@@ -60,6 +61,7 @@ export const configureExpressApp = async (app: Application) => {
   app.use("/payments", paymentRouter);
   app.use("/agencies", agenciesRouter);
   app.use("/person", personRouter);
+  app.use("/recommender", recommenderRouter);
 
   app.use(ownershipsRouter);
 

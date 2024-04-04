@@ -1,3 +1,4 @@
+import ServiceClient from "../../../shared/ServiceClient";
 import { Repository } from "../../../shared/types";
 import { SearchResult } from "../entities";
 
@@ -10,14 +11,21 @@ export class SearchResultsRepository
   findOneById(id: string, ...args: any[]): Promise<SearchResult | undefined> {
     throw new Error("Method not implemented.");
   }
-  findAll(...args: any[]): Promise<SearchResult[]> {
-    throw new Error("Method not implemented.");
+  findAll(personId: string): Promise<SearchResult[]> {
+    return ServiceClient.callService("hive-recommender-service", {
+      method: "GET",
+      url: `/user-searches/${personId}`,
+    });
   }
   findByCriteria(
     criteria: Record<string, any>,
-    ...args: any[]
+    personId: string
   ): Promise<SearchResult[]> {
-    throw new Error("Method not implemented.");
+    return ServiceClient.callService("hive-recommender-service", {
+      method: "GET",
+      url: `/user-searches/${personId}`,
+      params: criteria,
+    });
   }
   updateById(
     id: string,
