@@ -47,3 +47,21 @@ export {
 } from "./helpers";
 export { default as dbHelpers } from "./dbHelpers";
 export * from "./oauth";
+export const messageBroker = {
+  url: config.get("message_broker_url") as string,
+  exchanges: {
+    hive: {
+      name: config.get("message_broker.exchanges.hive.name") as string,
+      queues: {
+        logging: {
+          name: config.get(
+            "message_broker.exchanges.hive.queues.logging.name"
+          ) as string,
+          binding_key: config.get(
+            "message_broker.exchanges.hive.queues.logging.binding_key"
+          ) as string,
+        },
+      },
+    },
+  },
+};

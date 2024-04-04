@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { listingRepo } from "../repositories";
 import { z } from "zod";
+import { isEmpty } from "lodash";
+import { asynTasks } from "../../../tasks";
 
 export const getListings = async (
   req: Request,
@@ -9,6 +11,18 @@ export const getListings = async (
 ) => {
   try {
     const results = await listingRepo.findByCriteria(req.query);
+    if (!isEmpty(req.query)) {
+      await asynTasks.addUserSearch({
+        resourcepathName: req.path,
+        params: Object.entries(req.query as Record<string, string>).map(
+          ([name, value]) => ({
+            name,
+            value,
+          })
+        ),
+        // person: "",
+      });
+    }
     return res.json(results);
   } catch (error) {
     return next(error);
