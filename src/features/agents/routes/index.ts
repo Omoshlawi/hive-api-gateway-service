@@ -8,7 +8,7 @@ import {
   getArchievements,
   updateAgent,
 } from "../controllers";
-import { uploader } from "../../../middlewares";
+import { authenticateOptional, uploader } from "../../../middlewares";
 
 const router = Router();
 router.get("/:agentId/archivements", getArchievements);
@@ -18,7 +18,7 @@ router.post(
   addArchievements
 );
 
-router.get("/", getAgents);
+router.get("/", authenticateOptional, getAgents);
 router.post(
   "/",
   uploader.memoryFile().fields([

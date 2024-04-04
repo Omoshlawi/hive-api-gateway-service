@@ -3,6 +3,8 @@ import { agentsRepo } from "../repositories";
 import { z } from "zod";
 import { configuration, multerMemoryFilesToFileArray } from "../../../utils";
 import { fileRepo } from "../../files/repositories";
+import { isEmpty } from "lodash";
+import { asynTasks } from "../../../tasks";
 
 export const getAgents = async (
   req: Request,
@@ -11,6 +13,18 @@ export const getAgents = async (
 ) => {
   try {
     const agents = await agentsRepo.findByCriteria(req.query);
+    if (!isEmpty(req.query)) {
+      await asynTasks.addUserSearch({
+        resourcepathName: "/agents",
+        params: Object.entries(req.query as Record<string, string>).map(
+          ([name, value]) => ({
+            name,
+            value,
+          })
+        ),
+        person: (req as any).user?.person?.id,
+      });
+    }
     return res.json(agents);
   } catch (error) {
     return next(error);

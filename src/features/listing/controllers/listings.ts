@@ -13,14 +13,14 @@ export const getListings = async (
     const results = await listingRepo.findByCriteria(req.query);
     if (!isEmpty(req.query)) {
       await asynTasks.addUserSearch({
-        resourcepathName: req.path,
+        resourcepathName: "/listings",
         params: Object.entries(req.query as Record<string, string>).map(
           ([name, value]) => ({
             name,
             value,
           })
         ),
-        // person: "",
+        person: (req as any).user?.person?.id,
       });
     }
     return res.json(results);

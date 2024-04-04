@@ -3,6 +3,8 @@ import { agencyRepo } from "../repositories";
 import { z } from "zod";
 import { configuration, multerMemoryFilesToFileArray } from "../../../utils";
 import { fileRepo } from "../../files/repositories";
+import { isEmpty } from "lodash";
+import { asynTasks } from "../../../tasks";
 export * from "./agencyMembershipController";
 export * from "./achievements";
 
@@ -13,6 +15,18 @@ export const getAgencies = async (
 ) => {
   try {
     const agency = await agencyRepo.findByCriteria(req.query);
+    if (!isEmpty(req.query)) {
+      await asynTasks.addUserSearch({
+        resourcepathName: "/agencies",
+        params: Object.entries(req.query as Record<string, string>).map(
+          ([name, value]) => ({
+            name,
+            value,
+          })
+        ),
+        person: (req as any).user?.person?.id,
+      });
+    }
     return res.json(agency);
   } catch (error) {
     next(error);
@@ -83,7 +97,7 @@ export const createAgency = async (
     const agency = await agencyRepo.create({
       ...req.body,
       logo,
-      coverImage
+      coverImage,
     });
     return res.json(agency);
   } catch (error) {

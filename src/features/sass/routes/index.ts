@@ -8,11 +8,11 @@ import {
   getPricings,
   updatePricing,
 } from "../controllers";
-import authenticate from "../../../middlewares/authentication";
+import { requireAuthenticated } from "../../../middlewares";
 
 const router = Router();
 router.use("/features", featuresRouter);
-router.use("/subscriptions", authenticate, subscriptionsRouter);
+router.use("/subscriptions", requireAuthenticated, subscriptionsRouter);
 router.get("/", getPricings);
 router.post("/", addPricing);
 router.put("/:id", updatePricing);

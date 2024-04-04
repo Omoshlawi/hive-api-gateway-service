@@ -11,8 +11,7 @@ import {
   getArchievements,
   updateAgencyMembership,
 } from "../controllers";
-import authenticate from "../../../middlewares/authentication";
-import { uploader } from "../../../middlewares";
+import { authenticateOptional, uploader } from "../../../middlewares";
 
 const router = Router();
 
@@ -29,7 +28,7 @@ router.post(
   addArchievements
 );
 
-router.get("/", getAgencies);
+router.get("/", authenticateOptional, getAgencies);
 router.get("/:id", getAgency);
 router.post(
   "/",
