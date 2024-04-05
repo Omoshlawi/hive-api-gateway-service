@@ -17,6 +17,18 @@ const getOwnerShips = async (
   }
 };
 
+const getOwnershipsByIds = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    return res.json(await ownerShipRepo.findByIds(req.params.id, req.query));
+  } catch (error) {
+    next(error);
+  }
+};
+
 const addOwnerShip = async (
   req: Request,
   res: Response,
@@ -67,4 +79,10 @@ const deleteOwnerShip = async (
   }
 };
 
-export { addOwnerShip, updateOwnerShip, getOwnerShips, deleteOwnerShip };
+export {
+  addOwnerShip,
+  updateOwnerShip,
+  getOwnerShips,
+  deleteOwnerShip,
+  getOwnershipsByIds,
+};

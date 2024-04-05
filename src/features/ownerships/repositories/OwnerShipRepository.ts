@@ -30,6 +30,13 @@ class OwnershipRepository implements Repository<OwnerShip, string> {
       params: criteria,
     });
   }
+  findByIds(id: string, params: Record<string, any>): Promise<OwnerShip[]> {
+    return ServiceClient.callService("hive-ownership-service", {
+      method: "GET",
+      url: `ownerships/by/${id}`,
+      params: params,
+    });
+  }
   updateById(
     id: string,
     updates: Partial<OwnerShip>
