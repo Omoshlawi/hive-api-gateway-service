@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { listingRepo, tourScheduleRepository } from "../repositories";
 import { APIException } from "../../../shared/exceprions";
 import { z } from "zod";
+import { ownerShipRepo } from "../../ownerships/repositories";
 
 export const getMyTourSchedules = async (
   req: Request,
@@ -51,7 +52,16 @@ export const addTourSchedule = async (
       req.params.id,
       req.header("x-access-token") as string
     );
-    // const listing = await listingRepo.findOneById(req.params.id);
+    const listing = await listingRepo.findOneById(req.params.id);
+    // const ownership = await Promise.all(
+    //   listing?.properties.map((prop) =>
+    //     ownerShipRepo.findByIds(prop._id!, { by: "property" })
+    //   ) ?? []
+    // );
+    // await sendSms(
+    //   "0793889658",
+    //   `Dear Laurent Ouma, you have received a tour request for ${listing?.title} scheduled for ${tour.date} ${tour.time}`
+    // );
 
     return res.json(tour);
   } catch (error) {

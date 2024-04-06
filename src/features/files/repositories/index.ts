@@ -26,6 +26,25 @@ export class FileUploadRepository implements Repository<FileUpload, string> {
       data: objectToFormData(data),
     });
   }
+
+  async createManyImageFiles(
+    data: {
+      files: File[];
+      path?: string;
+      serviceName: string;
+      serviceVersion: string;
+      fieldName: string;
+    },
+    params: Record<string, any>
+  ): Promise<FileUpload[]> {
+    return await ServiceClient.callService("hive-files-service", {
+      method: "POST",
+      url: `files/images/upload/array`,
+      data: objectToFormData(data),
+      params,
+    });
+  }
+
   findOneById(id: string): Promise<FileUpload | undefined> {
     throw new Error("Method not implemented.");
   }

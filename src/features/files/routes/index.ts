@@ -27,6 +27,7 @@ router.get("*", async (req: Request, res: Response, next: NextFunction) => {
       method: "GET",
       url: filePath,
       responseType: "stream",
+      params: req.query,
     });
     // Pipe readable fileStream into res writable stream
     fileStream.pipe(res);
